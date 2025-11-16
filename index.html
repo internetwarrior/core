@@ -20,9 +20,10 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
+        flex-direction: column;
       }
 
-      div {
+      .box {
         text-align: center;
         border-radius: 8px;
         padding: 30px;
@@ -42,7 +43,7 @@
         justify-content: center;
       }
 
-      a {
+      ul li .lang {
         text-decoration: none;
         font-size: 18px;
         color: #f5f5f5;
@@ -54,12 +55,16 @@
           border-color 0.3s ease;
       }
 
-      a:hover {
+      .lang:hover {
         background-color: #f5f5f5;
         color: #121212;
         border-color: #f5f5f5;
       }
 
+      #help {
+        cursor: pointer;
+        color: white;
+      }
       /* Responsive for smaller screens */
       @media (max-width: 600px) {
         h1 {
@@ -74,7 +79,7 @@
     </style>
   </head>
   <body>
-    <div>
+    <div class="box">
       <h1>
         Choose the language
         <br />
@@ -82,12 +87,22 @@
       </h1>
       <ul>
         <li>
-          <a id="russian-link">Русский</a>
+          <a class="lang" id="russian-link">Русский</a>
         </li>
         <li>
-          <a id="english-link">English</a>
+          <a class="lang" id="english-link">English</a>
         </li>
       </ul>
+    </div>
+    <br />
+    <div>
+      <a
+        href="https://www.linguana.io/ru/blog/examples-of-cultural-difference"
+        target="_blank"
+        id="help"
+      >
+        Почему так?
+      </a>
     </div>
     <script>
       const russianLink = "https://guns.lol/lnternetwarrior";
