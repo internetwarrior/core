@@ -121,3 +121,7 @@ header a {
   color: white;
   font-weight: bold;
 }
+
+img {
+  background-color: black;
+}
