@@ -1,4 +1,5 @@
-let VOLUME = 0.1;
+let VOLUME = 0.09;
+// VOLUME = 0;
 
 const COLOR_OBJ = {
   color_1: 250,
@@ -6,9 +7,26 @@ const COLOR_OBJ = {
   color_3: 250,
 };
 
+const WORD_STORAGE = [
+  "Туда их!",
+  "Ты что!?",
+  "Не ахуел?",
+  "За что?",
+  "Хватит тыкать!",
+  "Успокойся",
+  "Я не знаю",
+  "Алё...",
+  "Упс...",
+  "Woops...",
+  "Anger!",
+  "Hello, world!",
+];
+
 BAR_WIDTH = 0.2;
 
 IS_PLAYING = false;
+
+const UNHOVER_TEXT = "упс...";
 
 function processArrayBuffer(arrayBuffer) {
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -33,6 +51,7 @@ async function loadDefaultAudio() {
   setTimeout(() => (startElement.style.display = "none"), 300);
 
   const response = await fetch("./intro.m4a");
+  // const response = await fetch("./song_2.mp3");
   const arrayBuffer = await response.arrayBuffer();
   processArrayBuffer(arrayBuffer);
   IS_PLAYING = true;
@@ -101,3 +120,108 @@ function visualize(audioBuffer, audioContext, gainNode) {
 
   draw();
 }
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+let interval = 1;
+
+const el = document.querySelector(".swear");
+
+el.addEventListener("mouseover", (event) => {
+  let iteration = 0;
+
+  clearInterval(interval);
+
+  interval = setInterval(() => {
+    event.target.innerText = event.target.innerText
+      .split("")
+      .map((letter, index) => {
+        if (index < iteration) {
+          return event.target.dataset.value[index];
+        }
+        return letters[Math.floor(Math.random() * 26)];
+      })
+      .join("");
+
+    if (iteration >= event.target.dataset.value.length) {
+      clearInterval(interval);
+    }
+
+    iteration += 1 / 3;
+  }, 30);
+});
+
+el.addEventListener("mouseleave", (event) => {
+  clearInterval(interval);
+  event.target.innerText =
+    WORD_STORAGE[Math.floor(Math.random() * WORD_STORAGE.length)]; // вернуть нормальный текст
+});
+
+// --- SNOW FALLING EFFECT
+
+window.onload = function () {
+  var canvas = document.getElementById("canvas-2");
+  var ctx = canvas.getContext("2d");
+
+  var W = window.innerWidth;
+  var H = window.innerHeight;
+  canvas.width = W;
+  canvas.height = H;
+
+  var mp = 50;
+  var particles = [];
+  for (var i = 0; i < mp; i++) {
+    particles.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 4 + 1,
+      d: Math.random() * mp,
+    });
+  }
+
+  var angle = 0;
+  var mouseX = W / 2;
+
+  document.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+  });
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = "rgba(171, 171, 171, 0.8)";
+    ctx.beginPath();
+    for (var i = 0; i < mp; i++) {
+      var p = particles[i];
+      ctx.moveTo(p.x, p.y);
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2, true);
+    }
+    ctx.fill();
+    update();
+  }
+
+  function update() {
+    angle += 0.01;
+    for (var i = 0; i < mp; i++) {
+      var p = particles[i];
+
+      // horizontal movement influenced by mouse
+      var dir = (mouseX - p.x) * 0.002; // smaller multiplier for smooth movement
+      p.x += dir;
+
+      // vertical movement
+      p.y += Math.cos(angle + p.d) + 1 + p.r / 2;
+
+      if (p.x > W + 5 || p.x < -5 || p.y > H) {
+        if (i % 3 > 0) {
+          particles[i] = { x: Math.random() * W, y: -10, r: p.r, d: p.d };
+        } else {
+          if (dir > 0) {
+            particles[i] = { x: -5, y: Math.random() * H, r: p.r, d: p.d };
+          } else {
+            particles[i] = { x: W + 5, y: Math.random() * H, r: p.r, d: p.d };
+          }
+        }
+      }
+    }
+  }
+  setInterval(draw, 33);
+};
