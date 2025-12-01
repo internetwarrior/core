@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Audio Visualiser</title>
+    <title>internetwarrior-main-page</title>
     <style>
       * {
         box-sizing: border-box;
@@ -68,10 +68,21 @@
       .window {
         padding: 40px;
         border-radius: 16px;
-        font-size: 32px;
+
         cursor: pointer;
         font-weight: bold;
         color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .window p {
+        font-size: 32px;
+      }
+
+      .window br {
+        height: 0px !important;
       }
 
       #model {
@@ -81,8 +92,22 @@
         transform: translate(-50%, -50%);
         color: white;
         opacity: 0;
-        text-align: center;
+        text-align: start;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
         /* Optional: you can add other styles for size and appearance */
+      }
+
+      #answer {
+        text-align: start !important;
+      }
+      .model-text {
+        text-align: center;
+      }
+      .model-small-text {
+        color: rgb(186, 186, 186);
       }
     </style>
   </head>
@@ -90,13 +115,15 @@
     <img src="./bg.jpg" alt="background" id="background" />
     <canvas id="canvas"></canvas>
     <div id="start">
-      <div class="window">нажми, чтобы начать...</div>
+      <div class="window">
+        <p>нажми, чтобы начать...</p>
+        <small class="model-small-text">(сырой build: 0.2)</small>
+      </div>
     </div>
 
     <div id="model">
-      <small>build: 0.1 сырой </small>
-      <h1>Кто ты?</h1>
-      <p>Я новый апгрейд, вашу мать!</p>
+      <h2>- Кто ты?</h2>
+      <h3 class="model-text">Совершенно новый апгрейд, <br />вашу мать!</h3>
     </div>
 
     <script src="index.js"></script>
