@@ -13,28 +13,33 @@ let song_name = songs[0];
 
 const WORD_STORAGE = [
   "Туда их!",
-  "Ты что!?",
-  "Не ахуел?",
-  "За что?",
-  "Хватит тыкать!",
-  "Успокойся",
-  "Я не знаю",
-  "Алё...",
+  "-Ты что!?",
+  "-Не ахуел?",
+  "за что?",
+  "-Хватит тыкать!",
+  "-Успокойся",
+  "я не знаю",
+  "-Ты упорный!",
+  "алё...",
+  "Иди сюда!",
   "Упс...",
   "Woops...",
   "Anger!",
   "Hello, world!",
   "CI PASTI!",
+  "пошла на хуй!",
 ];
 
 const bg = document.getElementById("background");
 const hero = document.getElementById("hero");
+const antiHero = document.getElementById("anti-hero");
 
 document.addEventListener("mousemove", (e) => {
   const x = e.clientX / window.innerWidth - 0.5;
   const y = e.clientY / window.innerHeight - 0.5;
   bg.style.transform = `translate(${x * 20}px, ${y * 20}px) scale(1.05)`;
-  hero.style.transform = `translate(${x * 2}px, ${y * 2}px)`;
+  antiHero.style.transform = `translate(${x * -80}px, ${y * -80}px)`;
+  hero.style.transform = `translate(${x * 120}px, ${y * 40}px)`;
 });
 
 BAR_WIDTH = 0.2;
@@ -53,9 +58,15 @@ function processArrayBuffer(arrayBuffer) {
   });
 }
 
+function moveToTop() {
+  const element = document.getElementById("anti-hero");
+  element.style.transition = "top 2s  ease-in-out"; // Ensure smooth transition
+  element.style.top = "0"; // Move the element to the top
+}
+
 async function loadDefaultAudio() {
   if (IS_PLAYING) return;
-
+  moveToTop();
   const model = document.getElementById("model");
   const backgroundElement = document.getElementById("background");
   model.style.opacity = "1";
