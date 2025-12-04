@@ -1,5 +1,9 @@
 let VOLUME = 0.2;
-// VOLUME = 0;
+let debug = false;
+
+if (debug) {
+  VOLUME = 0.0;
+}
 
 const COLOR_OBJ = {
   color_1: 250,
@@ -7,9 +11,9 @@ const COLOR_OBJ = {
   color_3: 250,
 };
 
-const songs = ["intro_3.m4a", "intro.m4a", "song_2.mp3"];
+const songs = ["song-1.m4a", "song-2.m4a", "song-3.m4a"];
 
-let song_name = songs[0];
+let song_name = "song-2.m4a";
 
 const WORD_STORAGE = [
   "Туда их!",
@@ -28,6 +32,8 @@ const WORD_STORAGE = [
   "Hello, world!",
   "CI PASTI!",
   "пошла на хуй!",
+  "Ехехехехехе",
+  // "-Это любовь)  <3 ",
 ];
 
 const bg = document.getElementById("background");
@@ -65,6 +71,7 @@ function moveToTop() {
 }
 
 async function loadDefaultAudio() {
+  hero.style.animation = "none";
   if (IS_PLAYING) return;
   moveToTop();
   const model = document.getElementById("model");

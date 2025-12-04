@@ -6,6 +6,15 @@
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+@keyframes floating {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100px);
+  }
+}
+
 body,
 html {
   height: 100%; /* Make sure body takes full height */
@@ -16,9 +25,18 @@ html {
   position: fixed;
   inset: 0;
   overflow: hidden;
-  z-index: -1;
+  background-color: black;
+  /* z-index: -1; */
 }
 
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 0%;
+  box-shadow: rgba(0, 0, 0, 0.9) 0px 20px 56px 100px;
+  z-index: 10;
+}
 #background,
 #hero {
   position: fixed;
@@ -33,7 +51,31 @@ html {
   top: 120vh;
   left: calc(50% - 120px);
   scale: 0.3;
-  transform: translateX(-50%);
+  /* animation: floating 10s 100ms infinite ease-out alternate; */
+  /* z-index: 9999; */
+}
+
+.bg-wrap {
+}
+
+#anti-her0 {
+  /* background-color: aqua; */
+}
+
+#hero {
+  /* background-color: aqua; */
+}
+
+@keyframes floating {
+  0% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-100px);
+  }
+  150% {
+    transform: translateY(0px);
+  }
 }
 
 canvas {
@@ -126,6 +168,7 @@ header {
   position: fixed;
   padding: 20px;
   right: 0;
+  z-index: 5;
 }
 
 header a {
@@ -140,4 +183,16 @@ header a {
 
 #hero {
   scale: 1.1;
+  animation: floating-2 10000ms 100ms infinite ease-in-out alternate;
+
+  /* z-index: 10; */
+}
+
+@keyframes floating-2 {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(20px);
+  }
 }
