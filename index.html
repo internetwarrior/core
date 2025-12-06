@@ -13,14 +13,19 @@
   </head>
   <body>
     <header>
-      <a href="https://portfolio-ashen-sigma-82.vercel.app/" target="_blank"
-        >Обо мне</a
-      >
+      <nav>
+        <button onclick="settingsButton()">
+          <img src="./assets/svg/settings_svg.svg" alt="" />
+        </button>
+        <a href="https://portfolio-ashen-sigma-82.vercel.app/" target="_blank"
+          >Обо мне</a
+        >
+      </nav>
     </header>
     <div class="bg-wrap">
-      <img src="./bg-removed.png" id="background" />
-      <img src="./anti-hero.png" id="anti-hero" />
-      <img src="./the_hero.png" id="hero" />
+      <img src="./assets/png/bg-removed.png" id="background" />
+      <img src="./assets/png/anti-hero.png" id="anti-hero" />
+      <img src="./assets/png/the_hero.png" id="hero" />
       <footer></footer>
     </div>
     <canvas id="canvas"></canvas>
@@ -31,10 +36,24 @@
         </small>  -->
 
         <small class="model-small-text"
-          >Подсказка:<span> Не забудь f11 для вайба</span>
+          >Подсказка:<span>
+            Не забудь f11 для вайба + Пробуй под NIKE лого
+          </span>
         </small>
         <p>нажми, чтобы начать...</p>
-        <small class="model-small-text">(сырой build: 0.3.4.1)</small>
+        <small class="model-small-text">(сырой build: 0.4.1.0)</small>
+        <br />
+        <small class="">
+          Что нового?
+          <br />
+          - Новый музон (AL NACER · Sayfalse, Nulteex)
+          <br />
+          - Сменил скорость под музон
+          <br />
+          - Увиличен хитбокс и инструктажная линия
+          <br />
+          - Скоро будет кнопка настроек
+        </small>
       </div>
     </div>
 
@@ -43,7 +62,7 @@
       <h3 class="model-text">
         Совершенный, новый апгрейд, <br />
         <!-- <p class="swear">вашу машашу и папашу!</p> -->
-        <p class="swear">вашу мать!</p>
+        <p class="swear" id="swear">вашу мать!</p>
       </h3>
     </div>
 

@@ -1,5 +1,8 @@
 let VOLUME = 0.2;
+VOLUME = 0.25;
 let debug = false;
+const defaultSpeed = 30;
+let speed = 100;
 
 if (debug) {
   VOLUME = 0.0;
@@ -11,10 +14,34 @@ const COLOR_OBJ = {
   color_3: 250,
 };
 
+function exitFullScreenOnEscape(event) {
+  if (event.key === "Escape") {
+    // Check if the document is currently in full-screen mode
+    if (document.fullscreenElement) {
+      // Exit full screen if it's active
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        // Firefox
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        // Chrome, Safari, Opera
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        // IE/Edge
+        document.msExitFullscreen();
+      }
+    }
+  }
+}
+
+// Add an event listener for the 'keydown' event on the document
+document.addEventListener("keydown", exitFullScreenOnEscape);
+
 const songs = ["song-1.m4a", "song-2.m4a", "song-3.m4a"];
 
 let song_name = "song-2.m4a";
-
+song_name = "song-4.m4a";
 const WORD_STORAGE = [
   "Туда их!",
   "-Ты что!?",
@@ -28,17 +55,27 @@ const WORD_STORAGE = [
   "Иди сюда!",
   "Упс...",
   "Woops...",
+  "-Уффффф.....",
   "Anger!",
   "Hello, world!",
   "CI PASTI!",
   "пошла на хуй!",
   "Ехехехехехе",
+  "-Не выводи меня из себя!",
+  "-Я тебе уже сказала... ",
+  "-Я знаю!",
+  "Ля, Ты тупая!",
+  // "#ФактыПримиXD",
   // "-Это любовь)  <3 ",
 ];
 
 const bg = document.getElementById("background");
 const hero = document.getElementById("hero");
 const antiHero = document.getElementById("anti-hero");
+
+function settingsButton() {
+  alert("DEBUG-SETTINGS-BUTTON");
+}
 
 document.addEventListener("mousemove", (e) => {
   const x = e.clientX / window.innerWidth - 0.5;
@@ -75,9 +112,11 @@ async function loadDefaultAudio() {
   if (IS_PLAYING) return;
   moveToTop();
   const model = document.getElementById("model");
+  const swear = document.getElementById("swear");
   const backgroundElement = document.getElementById("background");
   model.style.opacity = "1";
   backgroundElement.style.filter = "blur(0px)";
+  swear.style.animation = "borderDisappear 3s forwards ease-in-out";
 
   const startElement = document.getElementById("start");
   startElement.style.opacity = "0";
@@ -161,26 +200,44 @@ const el = document.querySelector(".swear");
 
 el.addEventListener("mouseover", (event) => {
   let iteration = 0;
-
+  let length = 0;
+  let state = false;
   clearInterval(interval);
 
   interval = setInterval(() => {
-    event.target.innerText = event.target.innerText
-      .split("")
-      .map((letter, index) => {
-        if (index < iteration) {
-          return event.target.dataset.value[index];
-        }
-        return letters[Math.floor(Math.random() * 26)];
-      })
-      .join("");
+    if (state) {
+      // state = false;
+      // Change letters and append '123'
+      event.target.innerText = event.target.innerText
+        .split("")
+        .map((letter, index) => {
+          if (index < iteration) {
+            return event.target.dataset.value[index];
+          }
+          return letters[Math.floor(Math.random() * 26)];
+        })
+        .join(""); // Append '123' when the state is true
+    } else {
+      state = true;
+      // Change letters but remove the '123' from the end
+      event.target.innerText = event.target.innerText
+        .split("")
+        .map((letter, index) => {
+          if (index < iteration) {
+            return event.target.dataset.value[index];
+          }
+          return letters[Math.floor(Math.random() * 26)];
+        })
+        .join("")
+        .slice(0, -3); // Remove the last 3 characters ('123') when the state is false
+    }
 
     if (iteration >= event.target.dataset.value.length) {
       clearInterval(interval);
     }
 
-    iteration += 1 / 3;
-  }, 30);
+    iteration += 1 / 3 + length;
+  }, speed);
 });
 
 el.addEventListener("mouseleave", (event) => {
