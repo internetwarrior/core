@@ -116,7 +116,8 @@ async function loadDefaultAudio() {
   const backgroundElement = document.getElementById("background");
   model.style.opacity = "1";
   backgroundElement.style.filter = "blur(0px)";
-  swear.style.animation = "borderDisappear 3s forwards ease-in-out";
+  swear.style.animation =
+    "borderDisappear var( --animation-duration) forwards ease-out";
 
   const startElement = document.getElementById("start");
   startElement.style.opacity = "0";
