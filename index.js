@@ -1,8 +1,9 @@
 let VOLUME = 0.2;
 VOLUME = 0.25;
 let debug = false;
-const defaultSpeed = 30;
-let speed = 100;
+let defaultSpeed = 30;
+let speed = defaultSpeed;
+speed = 20;
 
 if (debug) {
   VOLUME = 0.0;
@@ -13,6 +14,10 @@ const COLOR_OBJ = {
   color_2: 250,
   color_3: 250,
 };
+
+const songs = ["song-1.m4a", "song-2.m4a", "song-3.m4a"];
+
+let song_name = songs[2];
 
 function exitFullScreenOnEscape(event) {
   if (event.key === "Escape") {
@@ -38,11 +43,7 @@ function exitFullScreenOnEscape(event) {
 // Add an event listener for the 'keydown' event on the document
 document.addEventListener("keydown", exitFullScreenOnEscape);
 
-const songs = ["song-1.m4a", "song-2.m4a", "song-3.m4a"];
-
-let song_name = "song-2.m4a";
-song_name = "song-4.m4a";
-const WORD_STORAGE = [
+let WORD_STORAGE = [
   "Туда их!",
   "-Ты что!?",
   "-Не ахуел?",
@@ -67,6 +68,31 @@ const WORD_STORAGE = [
   "Ля, Ты тупая!",
   // "#ФактыПримиXD",
   // "-Это любовь)  <3 ",
+];
+
+WORD_STORAGE = [
+  "#THINK",
+  "#WORK",
+  "#UPGRADE",
+  "#NOTCH",
+  "#LOOSE",
+  "#SAMEAGAIN",
+  "#GETBACK",
+  "#KNOWLEDGE",
+  "#ТЫ_КТО_ТАКОЙ!?",
+  "#LIMITS",
+  "#BECAREFUL",
+  "#IMPROVE",
+  "#JUSTMAKEITDONE",
+  "#CRITICAL_THINKING",
+  "#ACTIVISION",
+  "#BEAFRAID",
+  "#DON'T MISTAKE",
+  "#PERFECT",
+  "#THINKFAST",
+  "#GIVE_UP",
+  "#ЗДРАВСТВУЙ!",
+  "#DON'T_UP",
 ];
 
 const bg = document.getElementById("background");

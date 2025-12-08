@@ -7,7 +7,7 @@
 
   --border-width: 5px;
   --border-radius: 2px;
-  --animation-duration: 1s;
+  --animation-duration: 0.5s;
 }
 
 @keyframes floating {
@@ -54,8 +54,8 @@ footer {
   position: fixed;
   top: 120vh;
   left: calc(50% - 120px);
-  /* scale: 0.3; */
-  scale: 0.39;
+  scale: 0.3;
+  /* scale: 0.39; */
   /* animation: floating 10s 100ms infinite ease-out alternate; */
   /* z-index: 9999; */
 }
