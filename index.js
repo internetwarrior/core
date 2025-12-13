@@ -3,7 +3,7 @@ const speed = 30; //30 is default
 //const startDelay = 3; for the future!
 const inverse = false;
 
-let WORD_STORAGE = [
+const WORD_STORAGE = [
   "Туда их!",
   "-Ты что!?",
   "-Не ахуел?",
@@ -26,6 +26,33 @@ let WORD_STORAGE = [
   "-Я тебе уже сказала... ",
   "-Я знаю!",
 ];
+
+const RANDOM_LINKS = [
+  "https://www.youtube.com/watch?v=Rt2zZSaOFtw",
+  "https://youtu.be/RlBKwHzZscA?si=rD__s-7BEuXBsj8o&t=143",
+  "https://www.youtube.com/watch?v=1EF0VOd3WGA",
+  "https://www.youtube.com/watch?v=KgayxOF4Y7E",
+  "https://www.youtube.com/watch?v=8mtxEbvzkHs",
+  "https://www.youtube.com/watch?v=hHZvUeAdzeI",
+  "https://www.youtube.com/watch?v=ueNY30Cs8Lk",
+  "https://www.youtube.com/watch?v=YqdAEdkHrwo",
+  "https://www.youtube.com/shorts/uwJZtFx9pDo",
+  "https://www.youtube.com/watch?v=nb_fFj_0rq8",
+  "https://www.youtube.com/watch?v=VQRLujxTm3c",
+  "https://www.youtube.com/watch?v=Fv0leN8TmR8",
+  "https://www.youtube.com/shorts/mLPEuB3rZbw",
+  "https://www.youtube.com/watch?v=msSc7Mv0QHY",
+  "https://www.youtube.com/watch?v=yeAWL9C0EJ0",
+  "https://www.youtube.com/watch?v=6PNPx0koe2E",
+  "https://www.youtube.com/watch?v=JGwWNGJdvx8",
+  // "https://www.youtube.com/watch?v=N1FLlU3o52o",
+  "https://www.youtube.com/watch?v=RfX0D6jVFLI",
+  "https://www.youtube.com/watch?v=ApXoWvfEYVU&",
+];
+
+function getRandomContent() {
+  return RANDOM_LINKS[Math.floor(Math.random() * RANDOM_LINKS.length)];
+}
 
 const songs = ["song-1.m4a", "song-2.m4a", "song-3.m4a", "final-song.m4a"];
 
@@ -72,7 +99,7 @@ const hero = document.getElementById("hero");
 const antiHero = document.getElementById("anti-hero");
 
 function settingsButton() {
-  alert("Soon! SETTINGS-BUTTON: version:(0.5.7.2)");
+  alert("Soon! SETTINGS-BUTTON: version:(0.6.1.0)");
 }
 
 document.addEventListener("mousemove", (e) => {
@@ -330,20 +357,16 @@ let start = Date.now();
 let stayedLongEnough = false;
 const intervalCheck = 10_000;
 
-// check every 30 sec and save time spent
-setInterval(() => {
-  const spent = Math.floor((Date.now() - start) / 1000);
-  console.log(spent);
-  if (spent >= 1) stayedLongEnough = true;
-}, intervalCheck);
+// // check every 30 sec and save time spent
+// setInterval(() => {
+//   const spent = Math.floor((Date.now() - start) / 1000);
+//   if (spent >= 1) stayedLongEnough = true;
+// }, intervalCheck);
 
 document.getElementById("ytBtn").onclick = () => {
-  if (!stayedLongEnough) {
-    alert("Откроется через 1 минуту.");
-    return;
-  }
-  window.open(
-    "https://youtu.be/RlBKwHzZscA?si=rD__s-7BEuXBsj8o&t=143",
-    "_blank"
-  );
+  // if (!stayedLongEnough) {
+  //   alert("Откроется через 10 секунд.");
+  //   return;
+  // }
+  window.open(getRandomContent(), "_blank");
 };

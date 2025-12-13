@@ -59,6 +59,14 @@
   }
 }
 
+#ytBtn {
+  display: flex;
+  color: white;
+  font-size: 16px;
+  justify-content: center;
+  align-items: center;
+}
+
 .warning-sign {
   font-size: 10px;
 }
