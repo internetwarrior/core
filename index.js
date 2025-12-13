@@ -48,6 +48,9 @@ const RANDOM_LINKS = [
   // "https://www.youtube.com/watch?v=N1FLlU3o52o",
   "https://www.youtube.com/watch?v=RfX0D6jVFLI",
   "https://www.youtube.com/watch?v=ApXoWvfEYVU&",
+  "https://www.youtube.com/watch?v=YhAyGHpOlZo",
+  "https://www.youtube.com/watch?v=mDUSjBiHYeY",
+  "https://www.youtube.com/watch?v=1yHA0EYby4I",
 ];
 
 function getRandomContent() {
