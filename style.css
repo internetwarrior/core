@@ -58,7 +58,9 @@
     transform: translateY(0px);
   }
 }
-
+#settingsBtn {
+  margin-right: auto;
+}
 #ytBtn {
   display: flex;
   color: white;
@@ -101,9 +103,13 @@ footer {
   transition: transform 0.08s linear;
 }
 
+.blue-filter {
+  filter: hue-rotate(240deg);
+}
+
 #anti-hero {
   position: fixed;
-  top: 120vh;
+  top: 20%;
   left: calc(50% - 120px);
   scale: 0.3;
   display: var(--anti-hero-visibility);
@@ -220,6 +226,7 @@ header nav {
   align-items: center;
   justify-content: end;
   padding: 10px;
+  padding-right: 20px;
   gap: 10px;
 }
 

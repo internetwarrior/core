@@ -1,9 +1,9 @@
-const VOLUME = 0.2; // 0.2 is defualt
-const speed = 30; //30 is default
+const VOLUME = 0.4; // 0.2 is defualt
+const speed = 39; //30 is default
 //const startDelay = 3; for the future!
 const inverse = false;
 
-const WORD_STORAGE = [
+let WORD_STORAGE = [
   "Туда их!",
   "-Ты что!?",
   "-Не ахуел?",
@@ -26,40 +26,23 @@ const WORD_STORAGE = [
   "-Я тебе уже сказала... ",
   "-Я знаю!",
 ];
+WORD_STORAGE = ["Hey, Wasup?", "How you doin!?", "Привет", "Как делишки?"];
 
-const RANDOM_LINKS = [
-  "https://www.youtube.com/watch?v=Rt2zZSaOFtw",
-  "https://youtu.be/RlBKwHzZscA?si=rD__s-7BEuXBsj8o&t=143",
-  "https://www.youtube.com/watch?v=1EF0VOd3WGA",
-  "https://www.youtube.com/watch?v=KgayxOF4Y7E",
-  "https://www.youtube.com/watch?v=8mtxEbvzkHs",
-  "https://www.youtube.com/watch?v=hHZvUeAdzeI",
-  "https://www.youtube.com/watch?v=ueNY30Cs8Lk",
-  "https://www.youtube.com/watch?v=YqdAEdkHrwo",
-  "https://www.youtube.com/shorts/uwJZtFx9pDo",
-  "https://www.youtube.com/watch?v=nb_fFj_0rq8",
-  "https://www.youtube.com/watch?v=VQRLujxTm3c",
-  "https://www.youtube.com/watch?v=Fv0leN8TmR8",
-  "https://www.youtube.com/shorts/mLPEuB3rZbw",
-  "https://www.youtube.com/watch?v=msSc7Mv0QHY",
-  "https://www.youtube.com/watch?v=yeAWL9C0EJ0",
-  "https://www.youtube.com/watch?v=6PNPx0koe2E",
-  "https://www.youtube.com/watch?v=JGwWNGJdvx8",
-  // "https://www.youtube.com/watch?v=N1FLlU3o52o",
-  "https://www.youtube.com/watch?v=RfX0D6jVFLI",
-  "https://www.youtube.com/watch?v=ApXoWvfEYVU&",
-  "https://www.youtube.com/watch?v=YhAyGHpOlZo",
-  "https://www.youtube.com/watch?v=mDUSjBiHYeY",
-  "https://www.youtube.com/watch?v=1yHA0EYby4I",
-];
+const THE_QUESTION_MARK_LINK =
+  "https://www.youtube.com/watch?v=ApXoWvfEYVU&list";
 
 function getRandomContent() {
-  return RANDOM_LINKS[Math.floor(Math.random() * RANDOM_LINKS.length)];
+  return THE_QUESTION_MARK_LINK;
 }
 
-const songs = ["song-1.m4a", "song-2.m4a", "song-3.m4a", "final-song.m4a"];
-
-let song_name = songs[3];
+const songs = [
+  "song-1.m4a",
+  "song-2.m4a",
+  "song-3.m4a",
+  "final-song.m4a",
+  "song_5.mp3",
+];
+let song_name = songs[4];
 
 const COLOR_OBJ = {
   color_1: 250,
@@ -102,7 +85,7 @@ const hero = document.getElementById("hero");
 const antiHero = document.getElementById("anti-hero");
 
 function settingsButton() {
-  alert("Soon! SETTINGS-BUTTON: version:(0.6.1.0)");
+  alert("Soon! SETTINGS-BUTTON: version:(0.6.1.1)");
 }
 
 document.addEventListener("mousemove", (e) => {
@@ -128,21 +111,43 @@ BAR_WIDTH = 0.2;
 IS_PLAYING = false;
 
 const UNHOVER_TEXT = "упс...";
+let originalVolume = VOLUME; // Store the initial volume
+let fadeDuration = 2; // Duration for the fade in seconds (smoothness of volume change)
 
 function processArrayBuffer(arrayBuffer) {
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
   const gainNode = audioContext.createGain();
-  gainNode.gain.value = VOLUME;
+  gainNode.gain.value = originalVolume;
 
   audioContext.decodeAudioData(arrayBuffer, (audioBuffer) => {
     visualize(audioBuffer, audioContext, gainNode);
   });
-}
 
+  // Function to smoothly fade volume to 0
+  function fadeToZero() {
+    const currentTime = audioContext.currentTime;
+    gainNode.gain.setValueAtTime(gainNode.gain.value, currentTime);
+    gainNode.gain.linearRampToValueAtTime(0.1, currentTime + fadeDuration);
+  }
+
+  // Function to restore volume back to original
+  function restoreVolume() {
+    const currentTime = audioContext.currentTime;
+    gainNode.gain.setValueAtTime(gainNode.gain.value, currentTime);
+    gainNode.gain.linearRampToValueAtTime(
+      originalVolume,
+      currentTime + fadeDuration
+    );
+  }
+
+  // Listen for window focus and blur events
+  window.addEventListener("blur", fadeToZero); // When window loses focus, fade to 0
+  window.addEventListener("focus", restoreVolume); // When window gains focus, restore volume
+}
 function moveToTop() {
   const element = document.getElementById("anti-hero");
   element.style.transition = "top 3s  ease-in-out"; // Ensure smooth transition
-  element.style.top = "0"; // Move the element to the top
+  element.style.top = "100%"; // Move the element to the top
 }
 
 async function loadDefaultAudio() {
@@ -152,8 +157,14 @@ async function loadDefaultAudio() {
   const model = document.getElementById("model");
   const swear = document.getElementById("swear");
   const backgroundElement = document.getElementById("background");
+  const heroElement = document.getElementById("hero");
   model.style.opacity = "1";
-  backgroundElement.style.filter = "blur(0px)";
+  backgroundElement.style.filter =
+    " hue-rotate(240deg) saturate(150%) brightness(105%)";
+  backgroundElement.style.opacity = "0.5";
+  heroElement.style.opacity = "1";
+  heroElement.style.filter =
+    " hue-rotate(240deg) saturate(150%) brightness(105%)";
   swear.style.animation =
     "borderDisappear var( --animation-duration) forwards ease-out";
 
