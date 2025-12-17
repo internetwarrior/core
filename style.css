@@ -103,6 +103,22 @@ footer {
   transition: transform 0.08s linear;
 }
 
+#hero {
+  z-index: 1;
+}
+#buildings {
+  position: fixed;
+  z-index: 1;
+  bottom: -100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  filter: blur(0.9px); /* Adjust the pixel value for more or less blur */
+}
+#buildings img {
+  width: 65%;
+}
+
 .blue-filter {
   filter: hue-rotate(240deg);
 }

@@ -1,4 +1,4 @@
-const VOLUME = 0.4; // 0.2 is defualt
+const VOLUME = 0.5; // 0.2 is defualt
 const speed = 39; //30 is default
 //const startDelay = 3; for the future!
 const inverse = false;
@@ -26,7 +26,13 @@ let WORD_STORAGE = [
   "-Я тебе уже сказала... ",
   "-Я знаю!",
 ];
-WORD_STORAGE = ["Hey, Wasup?", "How you doin!?", "Привет", "Как делишки?"];
+WORD_STORAGE = [
+  "Hey, Wasup?",
+  "How you doin!?",
+  "Привет",
+  "Как делишки?",
+  "А, меня зовут... 😊",
+];
 
 const THE_QUESTION_MARK_LINK =
   "https://www.youtube.com/watch?v=ApXoWvfEYVU&list";
@@ -44,12 +50,16 @@ const songs = [
 ];
 let song_name = songs[4];
 
+// const COLOR_OBJ = {
+//   color_1: 250,
+//   color_2: 250,
+//   color_3: 250,
+// };
 const COLOR_OBJ = {
-  color_1: 250,
-  color_2: 250,
-  color_3: 250,
+  color_1: 255, // Red channel (max for brightness)
+  color_2: 255, // Green channel (max for brightness)
+  color_3: 241, // Blue channel (still low but higher for a slightly cooler tone)
 };
-
 document.addEventListener("keydown", (e) => {
   if (e.key === "i") {
     // Press 'i' to toggle inverse mode
@@ -83,14 +93,16 @@ document.addEventListener("keydown", exitFullScreenOnEscape);
 const bg = document.getElementById("background");
 const hero = document.getElementById("hero");
 const antiHero = document.getElementById("anti-hero");
+const building = document.getElementById("buildings");
 
 function settingsButton() {
-  alert("Soon! SETTINGS-BUTTON: version:(0.6.1.1)");
+  alert("Soon! SETTINGS-BUTTON: version:(0.6.1.2)");
 }
-
 document.addEventListener("mousemove", (e) => {
   const x = e.clientX / window.innerWidth - 0.5;
   const y = e.clientY / window.innerHeight - 0.5;
+
+  // Get the 'building' element
 
   // Check if the inverse mode is active
   if (inverse) {
@@ -98,11 +110,14 @@ document.addEventListener("mousemove", (e) => {
     bg.style.transform = `translate(${x * -20}px, ${y * -20}px) scale(0.95)`;
     antiHero.style.transform = `translate(${x * 80}px, ${y * 80}px)`;
     hero.style.transform = `translate(${x * -120}px, ${y * -40}px)`;
+    building.style.transform = `translate(${x * -50}px, ${y * -50}px)`; // Parallax for building
   } else {
     // Normal transformations
     bg.style.transform = `translate(${x * 20}px, ${y * 20}px) scale(1.05)`;
-    antiHero.style.transform = `translate(${x * -80}px, ${y * -80}px)`;
-    hero.style.transform = `translate(${x * 120}px, ${y * 40}px)`;
+    antiHero.style.transform = `translate(${x * -80}px, ${y * -60}px)`;
+    // hero.style.transform = `translate(${x * 120}px, ${y * 40}px)`;
+    hero.style.transform = `translate(${x * 40}px, ${y * 20}px)`;
+    building.style.transform = `translate(${x * -20}px, ${y * -30}px)`; // Parallax for building
   }
 });
 
@@ -146,8 +161,11 @@ function processArrayBuffer(arrayBuffer) {
 }
 function moveToTop() {
   const element = document.getElementById("anti-hero");
+  const buildings = document.getElementById("buildings");
   element.style.transition = "top 3s  ease-in-out"; // Ensure smooth transition
+  buildings.style.transition = "bottom 3s  ease-in-out"; // Ensure smooth transition
   element.style.top = "100%"; // Move the element to the top
+  buildings.style.bottom = "0%"; // Move the element to the top
 }
 
 async function loadDefaultAudio() {
