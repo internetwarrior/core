@@ -236,6 +236,20 @@ button {
   z-index: 9999;
 }
 
+.snow {
+  opacity: 0.1;
+  animation: snow-effect 3s ease-in-out 1s infinite alternate !important; /* Use alternate to go back and forth */
+}
+
+@keyframes snow-effect {
+  0% {
+    opacity: 0.01;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+
 .model-small-text {
   color: rgb(132, 132, 132);
 }

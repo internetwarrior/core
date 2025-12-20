@@ -1,3 +1,5 @@
+// The Rome wasn't built in a single day
+
 const VOLUME = 1.0; // 0.2 is defualt ->0.5
 const backgroudVolume = VOLUME - 0.8;
 const speed = 50; //30 is default
@@ -10,12 +12,52 @@ const THE_QUESTION_MARK_LINK = "https://www.youtube.com/watch?v=HLQ1cK9Edhc";
 BAR_WIDTH = 0.2;
 
 IS_PLAYING = false;
-
 const COLOR_OBJ = {
-  color_1: 250,
-  color_2: 250,
-  color_3: 250,
-}; //default is 250
+  color_1: 250, // Red
+  color_2: 250, // Green
+  color_3: 250, // Blue
+};
+
+// Function to apply the background color from COLOR_OBJ
+function applyBackgroundColor() {
+  const rgbColor = `rgb(${COLOR_OBJ.color_1}, ${COLOR_OBJ.color_2}, ${COLOR_OBJ.color_3})`;
+  document.body.style.backgroundColor = rgbColor;
+}
+
+const heroElement = document.querySelector(".snow");
+
+if (heroElement) {
+  heroElement.addEventListener("click", function () {
+    // Change the background color to a random color
+    console.log("hello");
+    // Example: Change background color to random color
+    heroElement.style.backgroundColor = getRandomColor();
+  });
+}
+
+// Function to generate a random color
+function getRandomColor() {
+  COLOR_OBJ.color_1 = Math.floor(Math.random() * 256); // Random number between 0 and 255
+  COLOR_OBJ.color_2 = Math.floor(Math.random() * 256); // Random number between 0 and 255
+  COLOR_OBJ.color_3 = Math.floor(Math.random() * 256); // Random number between 0 and 255
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
+// // Function to change the color to red after 20 seconds
+// function changeColorAfterDelay() {
+//   setTimeout(() => {
+//     // Change the COLOR_OBJ values to red (in case they're changed later)
+//     COLOR_OBJ.color_1 = 255; // Red
+//     COLOR_OBJ.color_2 = 255; // Green
+//     COLOR_OBJ.color_2 = 0; // Blue
+
+//     // Apply the red color
+//     applyBackgroundColor();
+//   }, 10000); // 20000 milliseconds = 20 seconds
+// }
+
+// // Call the function to start the timer
+// changeColorAfterDelay();
 
 const songs = ["Smash Mouth - All Star.mp3"];
 let song_name = songs.length > 0 ? songs[songs.length - 1] : null;
