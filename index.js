@@ -2,10 +2,22 @@
 
 const VOLUME = 1.0; // 0.2 is defualt ->0.5
 const backgroudVolume = VOLUME - 0.8;
-const speed = 50; //30 is default
+let speed = 50; //30 is default
+const develoerMode = {
+  debug: false,
+  mode: false,
+  inverse: false,
+  devmodeEnterCount: 0,
+  develoerModeEnter: 10,
+};
+
+if (develoerMode.debug) {
+  develoerMode.develoerModeEnter = 0;
+}
 
 //const startDelay = 3; for the future!
 const inverse = false;
+let inverseMouseButtons = develoerMode.inverse;
 
 const THE_QUESTION_MARK_LINK = "https://www.youtube.com/watch?v=HLQ1cK9Edhc";
 
@@ -18,63 +30,30 @@ const COLOR_OBJ = {
   color_3: 250, // Blue
 };
 
+const UNHOVER_TEXT = "упс...";
+let originalVolume = VOLUME; // Store the initial volume
+let fadeDuration = 2; // Duration for the fade in seconds (smoothness of volume change)
+
 IS_FIRST_CLICK = true;
 
-// Function to apply the background color from COLOR_OBJ
-function applyBackgroundColor() {
-  const rgbColor = `rgb(${COLOR_OBJ.color_1}, ${COLOR_OBJ.color_2}, ${COLOR_OBJ.color_3})`;
-  document.body.style.backgroundColor = rgbColor;
-}
+const songs = [
+  "Smash Mouth - All Star.mp3",
+  "MrMoMMusic - Phao  2 Phut Hon KAIZ Remix  Animatio.mp3",
+  "_Татьяна_Куртукова_Одного_сл_и_муз_Птр_Андреев.mp3",
+  "EMIN - Kamin Lyric Video.mp3",
+];
 
-const heroElement = document.querySelector("body");
-if (heroElement) {
-  // Listen for left-click (normal click)
-  heroElement.addEventListener("click", function () {
-    if (IS_FIRST_CLICK) {
-      IS_FIRST_CLICK = false;
-      return;
-    } else {
-      console.log("Left-clicked");
-      heroElement.style.backgroundColor = getRandomColor();
-    }
-  });
+let song_name = songs.length > 0 ? songs[songs.length - songs.length] : null;
 
-  // Listen for right-click (context menu)
-  heroElement.addEventListener("contextmenu", function (event) {
-    event.preventDefault(); // Prevent the default right-click menu from appearing
-    const canvasElement = document.querySelector("#canvas");
-    console.log("Right-clicked");
-    canvasElement.classList.toggle("flip-y");
-    // heroElement.style.backgroundColor = getRandomColor();
-  });
-}
-
-// Function to generate a random color
-function getRandomColor() {
-  COLOR_OBJ.color_1 = Math.floor(Math.random() * 256); // Random number between 0 and 255
-  COLOR_OBJ.color_2 = Math.floor(Math.random() * 256); // Random number between 0 and 255
-  COLOR_OBJ.color_3 = Math.floor(Math.random() * 256); // Random number between 0 and 255
-  // return `rgb(${r}, ${g}, ${b})`;
-}
-
-// // Function to change the color to red after 20 seconds
-// function changeColorAfterDelay() {
-//   setTimeout(() => {
-//     // Change the COLOR_OBJ values to red (in case they're changed later)
-//     COLOR_OBJ.color_1 = 255; // Red
-//     COLOR_OBJ.color_2 = 255; // Green
-//     COLOR_OBJ.color_2 = 0; // Blue
-
-//     // Apply the red color
-//     applyBackgroundColor();
-//   }, 10000); // 20000 milliseconds = 20 seconds
-// }
-
-// // Call the function to start the timer
-// changeColorAfterDelay();
-
-const songs = ["Smash Mouth - All Star.mp3"];
-let song_name = songs.length > 0 ? songs[songs.length - 1] : null;
+const wish_to_say_and_get = [
+  "Привет...",
+  "Как дела?",
+  "Как твои родители?",
+  "-Привет",
+  "-Хорошо, спасибо.",
+  // "Пошла на хуй!",
+  "-Прости за все боли 😕",
+];
 
 let WORD_STORAGE = [
   "-Привет",
@@ -83,6 +62,102 @@ let WORD_STORAGE = [
   "#You-Dirty-Bustered!😆",
   daysLeftTill2026(),
 ];
+
+// Imported elements
+const heroElement = document.querySelector("body");
+
+const bg = document.getElementById("background");
+const hero = document.getElementById("hero");
+const antiHero = document.getElementById("anti-hero");
+const building = document.getElementById("buildings");
+
+//keydowns
+
+document.addEventListener("keydown", (e) => {
+  const key = Number(e.key);
+  if (key >= 1 && key <= songs.length) {
+    if (develoerMode.devmodeEnterCount >= develoerMode.develoerModeEnter) {
+      song_name = songs[key - 1];
+      console.log("Selected:", song_name);
+      develoerMode.inverse = true;
+      develoerMode.mode = true;
+      alert(
+        "Alert! Developer mode is activated! <- Try not over use it! Song changed to:" +
+          song_name
+      );
+    }
+    if (develoerMode.devmodeEnterCount == develoerMode.develoerModeEnter - 3) {
+      alert(`После дополнительных 3-попыток, у вас будет developer-mode.`);
+      develoerMode.devmodeEnterCount += 1;
+    } else {
+      develoerMode.devmodeEnterCount += 1;
+      console.warn(
+        "DEVELOPER-MODE-IS-BEING-ACTIVATED! Attempt: " +
+          develoerMode.devmodeEnterCount +
+          "/" +
+          develoerMode.develoerModeEnter
+      );
+    }
+  }
+}); // <- Developer mode! Try don't over use it mother-father!
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "i") {
+    // Press 'i' to toggle inverse mode
+    inverse = !inverse;
+  }
+});
+
+// Add an event listener for the 'keydown' event on the document
+document.addEventListener("keydown", exitFullScreenOnEscape);
+
+// Function to apply the background color from COLOR_OBJ
+function applyBackgroundColor() {
+  const rgbColor = `rgb(${COLOR_OBJ.color_1}, ${COLOR_OBJ.color_2}, ${COLOR_OBJ.color_3})`;
+  document.body.style.backgroundColor = rgbColor;
+}
+
+if (heroElement) {
+  heroElement.addEventListener("click", function () {
+    if (IS_FIRST_CLICK) {
+      IS_FIRST_CLICK = false;
+      return;
+    }
+
+    if (!inverseMouseButtons) {
+      console.log("Left-clicked");
+      heroElement.style.backgroundColor = getRandomColor();
+    } else {
+      console.log("Right-clicked (inverted)");
+      document.querySelector("#canvas").classList.toggle("flip-y");
+      if (develoerMode.mode) {
+        heroElement.style.backgroundColor = getRandomColor();
+      }
+    }
+  });
+
+  heroElement.addEventListener("contextmenu", function (event) {
+    event.preventDefault();
+
+    if (!inverseMouseButtons) {
+      console.log("Right-clicked");
+      document.querySelector("#canvas").classList.toggle("flip-y");
+      if (develoerMode.mode) {
+        heroElement.style.backgroundColor = getRandomColor();
+      }
+    } else {
+      console.log("Left-clicked (inverted)");
+      heroElement.style.backgroundColor = getRandomColor();
+    }
+  });
+}
+
+// Function to generate a random color
+function getRandomColor() {
+  COLOR_OBJ.color_1 = Math.floor(Math.random() * 256); // Random number between 0 and 255
+  COLOR_OBJ.color_2 = Math.floor(Math.random() * 256); // Random number between 0 and 255
+  COLOR_OBJ.color_3 = Math.floor(Math.random() * 256); // Random number between 0 and 255
+}
 
 function getRandomContent() {
   return THE_QUESTION_MARK_LINK;
@@ -117,21 +192,6 @@ function exitFullScreenOnEscape(event) {
   }
 }
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "i") {
-    // Press 'i' to toggle inverse mode
-    inverse = !inverse;
-  }
-});
-
-// Add an event listener for the 'keydown' event on the document
-document.addEventListener("keydown", exitFullScreenOnEscape);
-
-const bg = document.getElementById("background");
-const hero = document.getElementById("hero");
-const antiHero = document.getElementById("anti-hero");
-const building = document.getElementById("buildings");
-
 function settingsButton() {
   alert("Soon! SETTINGS-BUTTON");
 }
@@ -157,10 +217,6 @@ document.addEventListener("mousemove", (e) => {
     building.style.transform = `translate(${x * 120}px, ${y * 60}px)`; // Parallax for building
   }
 });
-
-const UNHOVER_TEXT = "упс...";
-let originalVolume = VOLUME; // Store the initial volume
-let fadeDuration = 2; // Duration for the fade in seconds (smoothness of volume change)
 
 function processArrayBuffer(arrayBuffer) {
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -199,10 +255,15 @@ function processArrayBuffer(arrayBuffer) {
 function moveToTop() {
   const element = document.getElementById("anti-hero");
   const buildings = document.getElementById("buildings");
+  buildings.style.transition = `bottom ${"1s"}  ease-in-out`;
   element.style.transition = "top 3s  ease-in-out"; // Ensure smooth transition
-  buildings.style.transition = `bottom ${"1s"}  ease-in-out`; // Ensure smooth transition
-  element.style.top = "100%"; // Move the element to the top
-  buildings.style.bottom = "0%"; // Move the element to the top
+  if (song_name !== songs[3]) {
+    element.style.top = "100%"; // Move the element to the top
+    buildings.style.bottom = "0%"; // Move the element to the top
+  } else {
+    WORD_STORAGE = wish_to_say_and_get;
+    speed = 100;
+  } // Ensure smooth transition
 }
 
 async function loadDefaultAudio() {
@@ -214,6 +275,7 @@ async function loadDefaultAudio() {
   const backgroundElement = document.getElementById("background");
   const heroElement = document.getElementById("hero");
   model.style.opacity = "1";
+
   backgroundElement.style.filter =
     " hue-rotate(240deg) saturate(150%) brightness(105%)";
   backgroundElement.style.opacity = "0.5";
@@ -297,6 +359,9 @@ function visualize(audioBuffer, audioContext, gainNode) {
 
   draw();
 }
+
+// Swear function
+
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 let interval = 1;

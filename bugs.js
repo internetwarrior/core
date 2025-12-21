@@ -65,3 +65,21 @@ WORD_STORAGE = [
   "#GIVE_UP",
   "#DON'T_UP",
 ];
+
+// Function to change the color to red after 20 seconds
+function changeColorAfterDelay() {
+  setTimeout(() => {
+    // Change the COLOR_OBJ values to red (in case they're changed later)
+    COLOR_OBJ.color_1 = 255; // Red
+    COLOR_OBJ.color_2 = 255; // Green
+    COLOR_OBJ.color_2 = 0; // Blue
+
+    // Apply the red color
+    applyBackgroundColor();
+  }, 10000); // 20000 milliseconds = 20 seconds
+}
+
+// Call the function to start the timer
+changeColorAfterDelay();
+
+// return `rgb(${r}, ${g}, ${b})`;
