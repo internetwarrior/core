@@ -2,7 +2,10 @@
 
 const VOLUME = 1.0; // 0.2 is defualt ->0.5
 const backgroudVolume = VOLUME - 0.8;
-let speed = 50; //30 is default
+let speed = 60; //30 is default
+
+let noChangeColor = true;
+
 const develoerMode = {
   debug: true,
   mode: false,
@@ -19,7 +22,8 @@ if (develoerMode.debug) {
 const inverse = false;
 let inverseMouseButtons = develoerMode.inverse;
 
-const THE_QUESTION_MARK_LINK = "https://www.youtube.com/watch?v=uY9-lpXsYTs";
+const THE_QUESTION_MARK_LINK =
+  "https://www.letras.com/kendrick-lamar/all-the-stars/";
 
 BAR_WIDTH = 0.2;
 
@@ -37,6 +41,7 @@ let fadeDuration = 2; // Duration for the fade in seconds (smoothness of volume 
 IS_FIRST_CLICK = true;
 
 const songs = [
+  "Kendrick Lamar  SZA - All the Stars.mp3",
   "MVSTERIOUS, bear bear  friends  VILLAGE FUNK.m4a",
   "Smash Mouth - All Star.mp3",
   "MrMoMMusic - Phao  2 Phut Hon KAIZ Remix  Animatio.mp3",
@@ -65,7 +70,14 @@ let WORD_STORAGE = [
   daysLeftTill2026(),
 ];
 
-WORD_STORAGE = [undefined, NaN, "error", daysLeftTill2026((state = true))];
+WORD_STORAGE = ["the S-Shield is", 'symbol for "hope"'];
+// WORD_STORAGE = [
+//   undefined,
+//   NaN,
+//   "error",
+//   daysLeftTill2026((state = true)),
+//   "777",
+// ];
 
 // Imported elements
 const heroElement = document.querySelector("body");
@@ -130,6 +142,9 @@ if (heroElement) {
 
     if (!inverseMouseButtons) {
       console.log("Left-clicked");
+      if (noChangeColor) {
+        return;
+      }
       heroElement.style.backgroundColor = getRandomColor();
     } else {
       console.log("Right-clicked (inverted)");
@@ -151,6 +166,9 @@ if (heroElement) {
       }
     } else {
       console.log("Left-clicked (inverted)");
+      if (noChangeColor) {
+        return;
+      }
       heroElement.style.backgroundColor = getRandomColor();
     }
   });
@@ -218,7 +236,7 @@ document.addEventListener("mousemove", (e) => {
   } else {
     // Normal transformations
     bg.style.transform = `translate(${x * 20}px, ${y * 20}px) scale(1.05)`;
-    antiHero.style.transform = `translate(${x * -80}px, ${y * -60}px)`;
+    antiHero.style.transform = `translate(${x * -120}px, ${y * -80}px)`;
     // hero.style.transform = `translate(${x * 120}px, ${y * 40}px)`;
     hero.style.transform = `translate(${x * 40}px, ${y * 40}px)`;
     building.style.transform = `translate(${x * 120}px, ${y * 60}px)`; // Parallax for building
@@ -265,7 +283,7 @@ function moveToTop() {
   buildings.style.transition = `bottom ${"1s"}  ease-in-out`;
   element.style.transition = "top 2s  ease-in-out"; // Ensure smooth transition
   if (song_name !== songs[3]) {
-    element.style.top = "-100%"; // Move the element to the top
+    element.style.top = "-5%"; // Move the element to the top
     buildings.style.bottom = "0%"; // Move the element to the top
   } else {
     WORD_STORAGE = wish_to_say_and_get;
@@ -494,7 +512,7 @@ window.onload = function () {
   }
 
   // Start the animation loop
-  setInterval(draw, 33); // Redraw every 33ms
+  setInterval(draw, 10); // Redraw every 33ms
 };
 
 let start = Date.now();

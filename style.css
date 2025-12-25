@@ -17,9 +17,14 @@
 
   --anti-hero-visibility: block;
   --anti-hero-border-width: 5px;
-  --anti-hero-opacity: 0.8;
+  --anti-hero-opacity: 1;
   --anti-hero-hitbox: transparent;
   user-select: none !important;
+}
+
+.hidden {
+  display: none;
+  opacity: 0;
 }
 
 .snow,
@@ -119,6 +124,8 @@ footer {
   z-index: 1;
 }
 #buildings {
+  display: none;
+  opacity: 0;
   position: fixed;
   z-index: 1;
   bottom: -100%;
@@ -139,9 +146,9 @@ footer {
 
 #anti-hero {
   position: fixed;
-  top: 20%;
+  top: 100%;
   left: calc(50% - 120px);
-  scale: 0.3;
+  scale: 0.2;
   display: var(--anti-hero-visibility);
   outline: var(--anti-hero-hitbox) var(--anti-hero-border-width) solid;
   opacity: var(--anti-hero-opacity);
@@ -163,7 +170,7 @@ canvas {
 }
 
 #canvas {
-  /* transform: scale(-1, -1); */
+  transform: scale(-1, -1);
   opacity: 0.9;
 }
 #canvas-2 {
